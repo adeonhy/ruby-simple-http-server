@@ -1,4 +1,5 @@
 require 'pathname'
+require './mime_detector'
 
 module SimpleServer
   class BadRequestError < StandardError; end
@@ -52,6 +53,7 @@ module SimpleServer
   class RequestHandler
     def to_response(request)
       response = Response.new
+      mime_detector = MimeDetector.new
 
       begin
         raise BadRequestError unless request.method == 'GET'
@@ -63,12 +65,7 @@ module SimpleServer
         response.body = File.read(path)
         response.status_code = 200
         
-        response.content_type = case path.extname
-                                when '.html'
-                                  'text/html'
-                                when '.jpg'
-                                  'image/jpeg'
-                                end
+        response.content_type = mime_detector.get_mime(path.extname)
         response
 
       rescue StandardError => e

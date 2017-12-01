@@ -21,7 +21,6 @@ module SimpleServer
           request = @parser.to_request(socket)
           p request
           response = @handler.to_response(request)
-          # p response.to_s
           socket.write(response)
 
           socket.close
