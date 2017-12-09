@@ -18,9 +18,9 @@ module SimpleServer
         Thread.start(server.accept) do |socket|
           puts "#{socket} is accepted."
 
-          request = @parser.to_request(socket)
+          request = @parser.parse(socket)
           p request
-          response = @handler.to_response(request)
+          response = @handler.handle(request)
           socket.write(response)
 
           socket.close

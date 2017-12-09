@@ -52,7 +52,7 @@ module SimpleServer
         
 
   class RequestHandler
-    def to_response(request)
+    def handle(request)
       response = Response.new
       mime_detector = MimeDetector.new
 
