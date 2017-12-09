@@ -33,16 +33,16 @@ module SimpleServer
 
       case error
       when BadRequestError
-        response.body = '400 bad request'
+        response.body = File.read('public/400.html')
         response.status_code = 400
       when ForbiddenError
-        response.body = '403 forbidden'
+        response.body = File.read('public/403.html')
         response.status_code = 403
       when NotFoundError
-        response.body = '404 not found'
+        response.body = File.read('public/404.html')
         response.status_code = 404
       else
-        response.body = '500 server error'
+        response.body = File.read('public/500.html')
         response.status_code = 500
       end
 
@@ -83,7 +83,6 @@ module SimpleServer
       path = req_path.sub(/^\//,'public/')
       path.directory? ? path.join('index.html') : path
     end
-
   end
 end
 
