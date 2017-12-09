@@ -1,4 +1,5 @@
 require 'pathname'
+require 'time'
 require './mime_detector'
 
 module SimpleServer
@@ -9,10 +10,10 @@ module SimpleServer
   Response = Struct.new(:status_code, :content_type, :body) do
     def header
       {
-        'Date' => "2013827389",
+        'Date' => Time.now.httpdate,
         'Server' => "SimpleHTTPServer",
         'Content-Type' => content_type,
-        'Content-Length' => body.length.to_s,
+        'Content-Length' => body.bytesize.to_s,
         'Connection' => 'Close'
       }
     end
